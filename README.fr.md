@@ -1,28 +1,26 @@
-﻿# Monsieur Skin : documentation d'ingenierie
+﻿# Monsieur Skin : documentation d'ingénierie
 
-Francais | [English](README.md)
+Français | [English](README.md)
 
-> Documentation uniquement. Le code source du produit est prive et proprietaire.
-> Concu, livre et exploite en solo par [Antoine Baudet](https://github.com/Baudet-Antoine).
+> Documentation uniquement. Le code source du produit est privé et propriétaire.
+> Conçu, livré et exploité en solo par [Antoine Baudet](https://github.com/Baudet-Antoine).
 
-<!-- TODO : demo de 60 a 90 s. Heberger sur YouTube (non liste), puis remplacer par un GIF cliquable :
-[![Demo](assets/demo.gif)](https://youtu.be/XXXX)
--->
+[![Video](assets/video.gif)](https://youtu.be/JX3YrPE-IcA)
 
 ## De quoi s'agit-il
 
-Monsieur Skin est une place de marche entre particuliers pour echanger des skins CS2. La
-plateforme ne detient jamais les objets (ils transitent par des offres d'echange Steam). Elle
-gere deux choses autour :
+Monsieur Skin est une place de marché entre particuliers pour échanger des skins CS2. La
+plateforme ne détient jamais les objets (ils transitent par des offres d'échange Steam). Elle
+gère deux choses autour :
 
-1. **La partie cash** d'un echange (Â« 2 objets + 50 EUR Â»), conservee sous sequestre jusqu'a
-   verification de l'echange.
-2. **La verification** que l'echange Steam a bien eu lieu, par preuves cryptographiques plutot
-   qu'en faisant confiance a l'une des parties.
+1. **La partie cash** d'un échange (« 2 objets + 50 EUR »), conservée sous séquestre jusqu'à
+   vérification de l'échange.
+2. **La vérification** que l'échange Steam a bien eu lieu, par preuves cryptographiques plutôt
+   qu'en faisant confiance à l'une des parties.
 
-Les difficultes : deplacer de l'argent reel en securite, prouver ce qu'une API tierce a repondu
-sans faire confiance au client, et garder le tout coherent quand Steam, Stripe et le reseau
-tombent en panne chacun a leur facon.
+Les difficultés : deplacer de l'argent réel en securité, prouver ce qu'une API tierce a repondu
+sans faire confiance au client, et garder le tout cohérent quand Steam, Stripe et le réseau
+tombent en panne chacun a leur façon.
 
 ## Architecture en un coup d'oeil
 
@@ -31,56 +29,64 @@ flowchart LR
   U[Navigateur] --> FE[Frontend React]
   U --> EXT[Extension Chrome MV3]
   FE -->|REST + Socket.io| BE[Backend Node/Express]
-  EXT -->|requetes signees| BE
-  EXT <-->|preuve de session TLS| NV[Verificateur Rust]
-  NV -->|webhook signe| BE
+  EXT -->|requêtes signees| BE
+  EXT <-->|preuve de session TLS| NV[Vérificateur Rust]
+  NV -->|webhook signé| BE
   BE <--> DB[(MongoDB)]
   BE <-->|Connect, PaymentIntents, webhooks| ST[Stripe]
-  BE <-->|offres d'echange, inventaire| SteamAPI[Steam]
-  BE --> W[Workers en arriere-plan]
+  BE <-->|offres d'échange, inventaire| SteamAPI[Steam]
+  BE --> W[Workers en arrière-plan]
   BE -.->|alertes| OBS[Sentry + Discord]
 ```
 
-Detail complet : [docs/architecture.md](docs/architecture.md) (en anglais).
+Détail complet : [docs/architecture.md](docs/architecture.md) (en anglais).
 
-## Les problemes qui valent le detour
+## Les problèmes qui valent le détour
 
-| Probleme | A lire |
+| Problème | à lire |
 |---|---|
-| Garder de l'argent une semaine sans portefeuille ni valeur stockee, et ne le liberer que sur livraison verifiee | [docs/escrow.md](docs/escrow.md) |
-| Prouver ce que l'API Steam a repondu, depuis un navigateur non fiable, avec TLSNotary (prouveur WASM + verificateur Rust) | [docs/tls-proof-flow.md](docs/tls-proof-flow.md) |
-| Modele de securite d'un produit qui manipule de l'argent et livre une extension navigateur | [docs/security.md](docs/security.md) |
-| Strategie de tests : tests de garde rapides et evals periodiques payantes | [docs/testing-evals.md](docs/testing-evals.md) |
-| Pourquoi X plutot que Y | [docs/decisions/](docs/decisions/) |
+| Garder de l'argent une semaine sans portefeuille ni valeur stockée, et ne le libérer que sur livraison verifiée | [docs/escrow.md](docs/escrow.md) |
+| Prouver ce que l'API Steam a répondu, depuis un navigateur non fiable, avec TLSNotary (prouveur WASM + vérificateur Rust) | [docs/tls-proof-flow.md](docs/tls-proof-flow.md) |
+| Modèle de sécurité d'un produit qui manipule de l'argent et livre une extension navigateur | [docs/security.md](docs/security.md) |
+| Stratégie de tests : tests de garde rapides et évals periodiques payantes | [docs/testing-evals.md](docs/testing-evals.md) |
+| Pourquoi X plutôt que Y | [docs/decisions/](docs/decisions/) |
 
 ## Stack
 
 - **Backend** : Node.js, Express, MongoDB (Mongoose), Socket.io, Stripe Connect, workers
-- **Verificateur** : Rust (axum, TLSNotary), derriere nginx
+- **Vérificateur** : Rust (axum, TLSNotary), derrière nginx
 - **Extension** : Chrome Manifest V3, service worker, prouveur TLSNotary en WASM, CSP stricte
-- **Frontend** : React 18, i18n (FR/EN), Stripe Elements
+- **Frontend** : React 18, i18n (FR/EN/DE/ES/RU/CN), Stripe Elements
 - **Ops** : VPS Linux, nginx, systemd, tests de charge k6, Sentry, alertes Discord
 
 ## En chiffres
 
 - Plus de 1000 commits depuis juillet 2025
-- Plus de 2 700 tests automatises : ~1 930 backend (Jest), ~600 frontend (Jest), 185 extension (node:test), 28 verificateur Rust (cargo)
-- Mesure le 2026-10-09
+- Plus de 2 700 tests automatisés : ~1 930 backend (Jest), ~600 frontend (Jest), 185 extension (node:test), 28 vérificateur Rust (cargo)
+- Mesuré le 2026-10-09
 - 1 service Rust, 1 extension, 1 application web, 1 backend, en solo
 
-## Mon role
+## Mon rôle
 
-Tout : produit, architecture, backend, frontend, extension, infrastructure, revue de securite,
-exploitation. Developpe avec des assistants de code IA selon un processus strict (tests et evals
+Tout : produit, architecture, backend, frontend, extension, infrastructure, revue de sécurité,
+exploitation. Developpé avec des assistants de code IA selon un processus strict (tests et évals
 dans le meme commit, deux voies de tests, services avec contrats aux frontieres).
 
 ## Contact
 
 - GitHub : [@Baudet-Antoine](https://github.com/Baudet-Antoine)
-- <!-- TODO : LinkedIn / email -->
+- LinkedIn : [@baudetantoine](https://www.linkedin.com/in/baudetantoine/)
+- email : [antoine.baudet@monsieurskin.fr](mailto:antoine.baudet@monsieurskin.fr)
+
+## Social
+
+- X : [@MonsieurSkin](https://x.com/MonsieurSkin)
+- Tiktok : [@monsieurskin.fr](https://www.tiktok.com/@monsieurskin.fr)
+- Youtube : [@MonsieurSkin](https://www.youtube.com/@MonsieurSkin)
+- Instagram : [@monsieurskin.fr](https://www.instagram.com/monsieurskin.fr)
 
 ## Licence
 
 (c) 2026 Antoine Baudet. Cette documentation est sous licence
 [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fr).
-Le code source de Monsieur Skin n'est **pas** inclus et reste proprietaire.
+Le code source de Monsieur Skin n'est **pas** inclus et reste propriétaire.
