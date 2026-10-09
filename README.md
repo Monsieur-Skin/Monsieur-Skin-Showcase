@@ -5,9 +5,7 @@
 > Documentation only. The product source code is private and proprietary.
 > Built, shipped and operated solo by [Antoine Baudet](https://github.com/Baudet-Antoine).
 
-<!-- TODO: 60-90s demo. Host on YouTube (unlisted), then replace with a clickable GIF:
-[![Demo](assets/demo.gif)](https://youtu.be/XXXX)
--->
+[![Video](assets/video.gif)](https://youtu.be/JX3YrPE-IcA)
 
 ## What it is
 
@@ -56,7 +54,7 @@ Full breakdown: [docs/architecture.md](docs/architecture.md).
 - **Backend**: Node.js, Express, MongoDB (Mongoose), Socket.io, Stripe Connect, background workers
 - **Verifier**: Rust (axum, TLSNotary), deployed behind nginx
 - **Extension**: Chrome Manifest V3, service worker, WASM TLSNotary prover, strict CSP
-- **Frontend**: React 18, i18n (FR/EN), Stripe Elements
+- **Frontend**: React 18, i18n (FR/EN/ES/DE/RU/CN - AI translation), Stripe Elements
 - **Ops**: Linux VPS, nginx, systemd, k6 load tests, Sentry, Discord alerting
 
 ## By the numbers
@@ -75,7 +73,15 @@ same commit, two test lanes, services with contracts at the boundary).
 ## Contact
 
 - GitHub: [@Baudet-Antoine](https://github.com/Baudet-Antoine)
-- <!-- TODO: LinkedIn / email -->
+- LinkedIn : [@baudetantoine](https://www.linkedin.com/in/baudetantoine/)
+- email : [antoine.baudet@monsieurskin.fr](mailto:antoine.baudet@monsieurskin.fr)
+
+## Social
+
+- X : [@MonsieurSkin](https://x.com/MonsieurSkin)
+- Tiktok : [@monsieurskin.fr](https://www.tiktok.com/@monsieurskin.fr)
+- Youtube : [@MonsieurSkin](https://www.youtube.com/@MonsieurSkin)
+- Instagram : [@monsieurskin.fr](https://www.instagram.com/monsieurskin.fr)
 
 ## License
 
