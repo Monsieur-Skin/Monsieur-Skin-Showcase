@@ -1,4 +1,4 @@
-# Monsieur Skin : documentation d'ingenierie
+﻿# Monsieur Skin : documentation d'ingenierie
 
 Francais | [English](README.md)
 
@@ -15,7 +15,7 @@ Monsieur Skin est une place de marche entre particuliers pour echanger des skins
 plateforme ne detient jamais les objets (ils transitent par des offres d'echange Steam). Elle
 gere deux choses autour :
 
-1. **La partie cash** d'un echange (« 2 objets + 50 EUR »), conservee sous sequestre jusqu'a
+1. **La partie cash** d'un echange (Â« 2 objets + 50 EUR Â»), conservee sous sequestre jusqu'a
    verification de l'echange.
 2. **La verification** que l'echange Steam a bien eu lieu, par preuves cryptographiques plutot
    qu'en faisant confiance a l'une des parties.
@@ -63,9 +63,9 @@ Detail complet : [docs/architecture.md](docs/architecture.md) (en anglais).
 
 ## En chiffres
 
-<!-- A actualiser avant publication. -->
 - Plus de 1000 commits depuis juillet 2025
-- Plus de 180 fichiers de tests (backend, extension, frontend)
+- Plus de 2 700 tests automatises : ~1 930 backend (Jest), ~600 frontend (Jest), 185 extension (node:test), 28 verificateur Rust (cargo)
+- Mesure le 2026-10-09
 - 1 service Rust, 1 extension, 1 application web, 1 backend, en solo
 
 ## Mon role

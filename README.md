@@ -1,4 +1,4 @@
-# Monsieur Skin: engineering write-up
+﻿# Monsieur Skin: engineering write-up
 
 [Francais](README.fr.md) | English
 
@@ -61,9 +61,9 @@ Full breakdown: [docs/architecture.md](docs/architecture.md).
 
 ## By the numbers
 
-<!-- Refresh these before publishing. -->
 - 1000+ commits since July 2025
-- 180+ test files across backend, extension and frontend
+- 2,700+ automated tests: ~1,930 backend (Jest), ~600 frontend (Jest), 185 extension (node:test), 28 Rust verifier (cargo)
+- Measured 2026-10-09
 - 1 Rust service, 1 browser extension, 1 web app, 1 backend, solo
 
 ## My role
